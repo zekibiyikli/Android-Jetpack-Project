@@ -66,6 +66,5 @@
         android:layout_centerHorizontal="true"
         android:text="Country Languagenn"
         android:layout_margin="7dp"/>
-
 </RelativeLayout>
 </layout>

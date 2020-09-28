@@ -9,7 +9,7 @@ import com.example.kotlincountries.model.Country
 interface CountryDAO {
     // Data Access object
 
-    //Inseert -> Insert Into
+    //Insert -> Insert Into
     // suspend -> coroutine, pause & resume
     // vararg -> multiple country objects - sayısını bilmediğimiz bir tekil objeyi oluşturmak için kullanılır
     // List<Long> -> primary keys
