@@ -1,6 +1,7 @@
 package com.example.kotlincountries.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlincountries.model.Country
@@ -22,13 +23,27 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
     private val countryApiService = CountryAPIService()
     private val disposable = CompositeDisposable()
     private var customPreferences = CustomSharedPreferences(getApplication())
+    private var refrestTime = 10*60*1000*1000*1000L // 10 dakikayı nanosaniyeyi verir
 
     val countries = MutableLiveData<List<Country>>()
     val countryError = MutableLiveData<Boolean>()
     val countryLoading = MutableLiveData<Boolean>()
 
     fun refreshData(){
-        getDataFromAPI()
+        val updateTime = customPreferences.getTime()
+        if (updateTime!=null && updateTime !=0L && System.nanoTime()-updateTime<refrestTime){
+            getDataFromSQLite()
+        }else{
+            getDataFromAPI()
+        }
+    }
+
+    private fun getDataFromSQLite(){
+        launch {
+            val countries=CountryDatabase(getApplication()).countryDao().getAllCountries()
+            showCountries(countries)
+            Toast.makeText(getApplication(),"Countries From SQLite",Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun getDataFromAPI(){
@@ -41,6 +56,7 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
                 .subscribeWith(object : DisposableSingleObserver<List<Country>>(){
                     override fun onSuccess(t: List<Country>) {
                         storeInSQLite(t)
+                        Toast.makeText(getApplication(),"Countries From API",Toast.LENGTH_LONG).show()
                     }
                     override fun onError(e: Throwable) {
                         countryLoading.value=false
