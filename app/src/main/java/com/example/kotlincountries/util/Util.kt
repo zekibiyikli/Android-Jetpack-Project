@@ -13,6 +13,17 @@ fun String.myExtension(myParameter:String){
 }
 */
 
+fun ImageView.downloadFromUrl(url:String?,progressDrawable: CircularProgressDrawable){
+    val options = RequestOptions()
+        .placeholder(progressDrawable)
+        .error(R.mipmap.ic_launcher_round)
+
+    Glide.with(context)
+        .setDefaultRequestOptions(options)
+        .load(url)
+        .into(this)
+}
+
 fun ImageView.downloadFromUrl(url:String?){
     val options = RequestOptions()
         .placeholder(placeHolderProgressBar(context))
@@ -23,6 +34,7 @@ fun ImageView.downloadFromUrl(url:String?){
         .load(url)
         .into(this)
 }
+
 
 fun placeHolderProgressBar(context:Context):CircularProgressDrawable{
     return CircularProgressDrawable(context).apply {

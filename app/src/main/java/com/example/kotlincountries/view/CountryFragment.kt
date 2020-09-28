@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.kotlincountries.R
 import com.example.kotlincountries.adapter.CountryAdapter
+import com.example.kotlincountries.util.downloadFromUrl
+import com.example.kotlincountries.util.placeHolderProgressBar
 import com.example.kotlincountries.viewmodel.CountryViewModel
 import kotlinx.android.synthetic.main.fragment_country.*
 
@@ -34,12 +36,12 @@ class CountryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(CountryViewModel::class.java)
-        viewModel.getDataFromRoom()
-
         arguments?.let {
             countryId=CountryFragmentArgs.fromBundle(it).countryId
         }
+
+        viewModel = ViewModelProviders.of(this).get(CountryViewModel::class.java)
+        viewModel.getDataFromRoom(countryId)
 
         observeLivedata()
     }
@@ -52,6 +54,9 @@ class CountryFragment : Fragment() {
                 countryCurrency.text=country.countryCurrency
                 countryLanguage.text=country.countryLanguage
                 countryRegion.text=country.countryRegion
+                context?.let {
+                    countryImage.downloadFromUrl(country.imageUrl, placeHolderProgressBar(it))
+                }
             }
         })
     }

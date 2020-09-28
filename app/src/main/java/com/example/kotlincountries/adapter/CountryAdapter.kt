@@ -10,7 +10,9 @@ import com.bumptech.glide.Glide
 import com.example.kotlincountries.R
 import com.example.kotlincountries.model.Country
 import com.example.kotlincountries.util.downloadFromUrl
+import com.example.kotlincountries.util.placeHolderProgressBar
 import com.example.kotlincountries.view.FeedFragmentDirections
+import kotlinx.android.synthetic.main.fragment_country.*
 import kotlinx.android.synthetic.main.item_country.view.*
 
 class CountryAdapter(val countryList:ArrayList<Country>): RecyclerView.Adapter<CountryAdapter.CountryViewHolder>() {
@@ -35,8 +37,9 @@ class CountryAdapter(val countryList:ArrayList<Country>): RecyclerView.Adapter<C
 
         holder.view.imageView.downloadFromUrl(countryList.get(position).imageUrl)
 
+
         holder.view.setOnClickListener {
-            val action = FeedFragmentDirections.actionFeedFragmentToCountryFragment()
+            val action = FeedFragmentDirections.actionFeedFragmentToCountryFragment(countryList[position].id)
             Navigation.findNavController(it).navigate(action)
         }
     }
