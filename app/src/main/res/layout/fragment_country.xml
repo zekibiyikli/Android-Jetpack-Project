@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="selectedCountry"
+            type="com.example.kotlincountries.model.Country" />
+    </data>
+
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,6 +20,7 @@
         android:layout_alignParentTop="true"
         android:scaleType="fitCenter"
         android:minHeight="200dp"
+        android:downloadUrl="@{selectedCountry.imageUrl}"
         android:src="@mipmap/ic_launcher_round"
         android:paddingTop="10dp"/>
 
@@ -24,7 +32,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:text="Country Name"
+        android:text="@{selectedCountry.countryName}"
         android:layout_margin="7dp"/>
 
     <TextView
@@ -34,7 +42,7 @@
         android:layout_below="@id/countryName"
         android:textSize="16sp"
         android:layout_centerHorizontal="true"
-        android:text="Country Capital"
+        android:text="@{selectedCountry.countryCapital}"
         android:layout_margin="7dp"/>
 
     <TextView
@@ -44,7 +52,7 @@
         android:layout_below="@id/countryCapital"
         android:textSize="16sp"
         android:layout_centerHorizontal="true"
-        android:text="Country Region"
+        android:text="@{selectedCountry.countryRegion}"
         android:layout_margin="7dp"/>
 
     <TextView
@@ -54,7 +62,7 @@
         android:layout_below="@id/countryRegion"
         android:textSize="16sp"
         android:layout_centerHorizontal="true"
-        android:text="Country Currency"
+        android:text="@{selectedCountry.countryCurrency}"
         android:layout_margin="7dp"/>
 
     <TextView
@@ -64,7 +72,7 @@
         android:layout_below="@id/countryCurrency"
         android:textSize="16sp"
         android:layout_centerHorizontal="true"
-        android:text="Country Languagenn"
+        android:text="@{selectedCountry.countryLanguage}"
         android:layout_margin="7dp"/>
 </RelativeLayout>
 </layout>
